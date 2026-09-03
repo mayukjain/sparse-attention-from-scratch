@@ -1,0 +1,11 @@
+batch_size=64   ##how many indpendet smaples to run in parallel
+block_size=256   #max context len of predic
+max_iter=5000
+eval_interval=500
+learn_rate=3e-4
+device="cuda"
+eval_itr=200
+n_embd=384 
+n_layer=6
+n_head=6
+dropout=0.2
