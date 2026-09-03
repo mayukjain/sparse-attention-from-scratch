@@ -8,7 +8,7 @@ Standard dense attention scales as O(n²) in sequence length. This project imple
 
 ## Current state
 
-- [x] Working dense transformer (val loss ~1.53 at 2500 iters on TinyShakespeare)
+- [x] Working dense transformer (val loss ~1.487 at 5000 iters on TinyShakespeare)
 - [ ] Sliding window attention
 - [ ] Block-sparse attention  
 - [ ] Correctness harness (sparse ≡ dense when masks align)
