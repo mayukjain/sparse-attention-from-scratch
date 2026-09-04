@@ -4,6 +4,7 @@ from torch.nn import functional as F
 torch.manual_seed(1337)
 from hyperparams import *
 from data import get_batch,decode,vocab_size
+from masks import *
 
 class GPT(nn.Module):
     def __init__(self):
@@ -41,19 +42,27 @@ class GPT(nn.Module):
         return idx
 
 class head(nn.Module):
-    def __init__(self,head_size):
+    def __init__(self,head_size,mask_type=mask_type):
         super().__init__()
+        if mask_type == 'dense':
+            mask = causal_mask(block_size)
+        elif mask_type == 'sliding':
+            mask = sliding_window_mask(block_size,window_size)
+        elif mask_type == 'bigbird':
+            mask = bigbird_mask(block_size,window_size,num_random,num_global)
         self.key=nn.Linear(n_embd,head_size,bias=False)
         self.query=nn.Linear(n_embd,head_size,bias=False)
         self.value=nn.Linear(n_embd,head_size,bias=False)
-        self.register_buffer('tril',torch.tril(torch.ones(block_size,block_size)))
+        mask = mask + torch.eye(block_size)  ##ad dig to matrices in case null matr
+        mask = mask.clamp(max=1)            ##bring it back to 1 we orginaly was 1 if null then beomce dig mat  (1.4 null problem solved)
+        self.register_buffer('mask',mask)
         self.dropout=nn.Dropout(dropout)
     def forward(self,x):
         B,T,C=x.shape
         q=self.query(x)
         k=self.key(x)
         wei=q @ k.transpose(-2,-1)*C**-0.5
-        wei=wei.masked_fill(self.tril[:T,:T]==0,float("-inf"))
+        wei=wei.masked_fill(self.mask[:T,:T]==0,float("-inf"))
         wei=torch.softmax(wei,dim=-1)
         wei=self.dropout(wei)
         v=self.value(x)
@@ -94,3 +103,4 @@ class block(nn.Module):
         x=x+self.sa(self.ln1(x))  ##x is a residual line for input direct to post attn and post compuation
         x=x+self.ffwd(self.ln2(x))
         return x
+

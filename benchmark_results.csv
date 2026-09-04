@@ -1,0 +1,16 @@
+variant,seq_len,time_ms,mem_mb
+dense,512,0.22,13.2
+dense,1024,0.69,24.9
+dense,2048,2.37,70.4
+dense,4096,9.13,242.4
+dense,8192,35.15,924.4
+sliding,512,0.18,13.2
+sliding,1024,0.60,24.9
+sliding,2048,2.18,70.4
+sliding,4096,9.14,242.4
+sliding,8192,35.18,924.4
+bigbird,512,0.18,13.2
+bigbird,1024,0.61,24.9
+bigbird,2048,2.19,70.4
+bigbird,4096,9.13,242.4
+bigbird,8192,35.16,924.4
