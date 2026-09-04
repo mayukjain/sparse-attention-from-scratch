@@ -37,12 +37,22 @@ Hardware: RTX 3050 6GB, batch size 1, single attention head.
 
 ## Setup
 
+Prerequisites: PyTorch (CUDA optional but recommended), Python 3.10+, matplotlib.
+
+Training a model:
 ```bash
 conda activate ml
 python nano.py
 ```
 
-Requires: PyTorch (CUDA optional but recommended), Python 3.10+.
+Configure the attention type in `hyperparams.py` by setting `mask_type` to `'dense'`, `'sliding'`, or `'bigbird'`.
+
+Running the benchmark:
+```bash
+python benchmarking.py
+```
+
+This will produce `benchmark_results.csv` and `assets/benchmark_plot.png`.
 
 ## References
 
