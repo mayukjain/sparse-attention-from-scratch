@@ -9,8 +9,8 @@ Standard dense attention scales as O(n²) in sequence length. This project imple
 ## Current state
 
 - [x] Working dense transformer (val loss ~1.53 at 2500 iters on TinyShakespeare)
-- [x] Sliding window attention
-- [x] BigBird-style attention (sliding + global + random)
+- [x] Sliding window attention(window_size=128, val loss ~1.53 at 2500 iters)
+- [x] BigBird-style attention (sliding + global + random; window=128, global=2, random=3; val loss ~1.52 at 2500 iters)
 - [ ] Correctness harness (partial — mask function tests done, more coverage planned)
 - [x] Numerical stability handling for fully-masked rows
 - [x] Benchmark: dense vs. sparse across sequence lengths (512 → 8192)
@@ -37,12 +37,22 @@ Hardware: RTX 3050 6GB, batch size 1, single attention head.
 
 ## Setup
 
+Prerequisites: PyTorch (CUDA optional but recommended), Python 3.10+, matplotlib.
+
+Training a model:
 ```bash
 conda activate ml
 python nano.py
 ```
 
-Requires: PyTorch (CUDA optional but recommended), Python 3.10+.
+Configure the attention type in `hyperparams.py` by setting `mask_type` to `'dense'`, `'sliding'`, or `'bigbird'`.
+
+Running the benchmark:
+```bash
+python benchmarking.py
+```
+
+This will produce `benchmark_results.csv` and `assets/benchmark_plot.png`.
 
 ## References
 
