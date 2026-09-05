@@ -18,6 +18,46 @@ Standard dense attention scales as O(n²) with sequence length. This project imp
 * [x] Writeup (see [writeup.md](writeup.md))
 * [ ] Custom sparse attention kernel
 
+## Architecture
+
+The project follows a minimal GPT-style decoder-only Transformer, with the attention mechanism replaced by different attention patterns for comparison.
+
+```text
+Input tokens
+     │
+     ▼
+Token Embedding + Positional Embedding
+     │
+     ▼
+┌──────────────────────────────┐
+│     Transformer Block × N    │
+│                              │
+│  LayerNorm                   │
+│      │                       │
+│      ▼                       │
+│  Attention                  │
+│      │                       │
+│      ├── Dense               │
+│      ├── Sliding Window     │
+│      └── BigBird-style      │
+│                              │
+│      ▼                       │
+│  Residual Connection        │
+│      │                       │
+│  LayerNorm                   │
+│      │                       │
+│      ▼                       │
+│  Feed-Forward Network       │
+│      │                       │
+│  Residual Connection        │
+└──────────────┬───────────────┘
+               │
+               ▼
+        Language Model Head
+               │
+               ▼
+        Next-token logits
+
 ## Results
 
 ### Benchmark: forward-pass time and memory vs. sequence length
