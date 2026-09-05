@@ -104,13 +104,18 @@ python nano.py
 
 Configure the attention type in `hyperparams.py` by setting `mask_type` to `'dense'`, `'sliding'`, or `'bigbird'`.
 
-Running the correctness harness:
 
+Running the correctness harness:
 ```bash
 python harness.py
 ```
 
+Running the benchmark:
+```bash
+python benchmarking.py
+```
 This will produce `benchmark_results.csv` and `assets/benchmark_plot.png`.
+
 
 ## References
 
