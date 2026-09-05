@@ -57,6 +57,7 @@ Token Embedding + Positional Embedding
                │
                ▼
         Next-token logits
+```
 
 ## Results
 
