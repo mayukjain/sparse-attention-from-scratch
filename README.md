@@ -15,7 +15,7 @@ Standard dense attention scales as O(n²) in sequence length. This project imple
 - [x] Numerical stability handling for fully-masked rows
 - [x] Benchmark: dense vs. sparse across sequence lengths (512 → 8192)
 - [x] Quality comparison on TinyShakespeare (in progress)
-- [x] Writeup
+- [x] Writeup (see [WRITEUP.md](WRITEUP.md))
 - [ ] future expansions (custom kernal big bird)
 
 ## Results
@@ -35,6 +35,19 @@ Peak memory is identical across all three variants at each sequence length (13.2
 **Finding:** naive mask-based sparse attention exhibits identical time and memory scaling to dense (O(n²)). This is expected — `masked_fill` zeroes entries in an already-allocated T×T score matrix, so compute and memory don't decrease. Real sparse attention (e.g., Longformer's CUDA implementation) avoids materializing the full matrix; that would require custom kernel code beyond this task's scope.
 
 Hardware: RTX 3050 6GB, batch size 1, single attention head.
+### Quality comparison on TinyShakespeare
+
+Trained with matched hyperparameters (block_size=256, n_layer=2, n_head=6, batch_size=64, 5000 iterations).
+
+| Variant  | Config                              | Val Loss |
+|----------|-------------------------------------|----------|
+| Dense    | full causal                         | 1.5674   |
+| Sliding  | window_size=128                     | 1.5646   |
+| BigBird  | window=128, global=2, random=3      | 1.5490   |
+
+BigBird outperforms both dense and sliding on this task by a small but consistent margin. See [WRITEUP.md](WRITEUP.md) for full discussion.
+
+Generation samples from each trained model: [samples.txt](samples.txt).
 
 ## Setup
 
@@ -48,15 +61,16 @@ python nano.py
 
 Configure the attention type in `hyperparams.py` by setting `mask_type` to `'dense'`, `'sliding'`, or `'bigbird'`.
 
-Running the benchmark:
+Running the correctness harness:
 ```bash
-python benchmarking.py
+python harness.py
 ```
 
 This will produce `benchmark_results.csv` and `assets/benchmark_plot.png`.
 
 ## References
 
-- Karpathy, *Let's Build GPT* — architectural foundation.
-- Beltagy et al., *Longformer* (2020) — sliding window attention.
-- Zaheer et al., *Big Bird* (2020) — block-sparse + global + random patterns.
+[1] Vaswani et al. (2017). *Attention Is All You Need*. NeurIPS.  
+[2] Beltagy, Peters, & Cohan (2020). *Longformer: The Long-Document Transformer*. arXiv:2004.05150.  
+[3] Zaheer et al. (2020). *Big Bird: Transformers for Longer Sequences*. NeurIPS.  
+[4] Dao et al. (2022). *FlashAttention*. NeurIPS.
