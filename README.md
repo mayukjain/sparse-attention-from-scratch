@@ -14,8 +14,9 @@ Standard dense attention scales as O(n²) in sequence length. This project imple
 - [x] Correctness harness (8 tests covering sliding + bigbird structure, causality, boundaries)
 - [x] Numerical stability handling for fully-masked rows
 - [x] Benchmark: dense vs. sparse across sequence lengths (512 → 8192)
-- [ ] Quality comparison on TinyShakespeare (in progress)
-- [ ] Writeup
+- [x] Quality comparison on TinyShakespeare (in progress)
+- [x] Writeup
+- [ ] future expansions (custom kernal big bird)
 
 ## Results
 
