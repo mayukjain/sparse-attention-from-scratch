@@ -8,14 +8,14 @@ Standard dense attention scales as O(n²) in sequence length. This project imple
 
 ## Current state
 
-- [x] Working dense transformer (val loss ~1.53 at 2500 iters on TinyShakespeare)
-- [x] Sliding window attention(window_size=128, val loss ~1.53 at 2500 iters)
-- [x] BigBird-style attention (sliding + global + random; window=128, global=2, random=3; val loss ~1.52 at 2500 iters)
-- [x] Correctness harness (8 tests covering sliding + bigbird structure, causality, boundaries)
+- [x] Working dense transformer (val loss 1.5674 at 5000 iters, n_layer=2)
+- [x] Sliding window attention (val loss 1.5646)
+- [x] BigBird-style attention (val loss 1.5490)
+- [x] Correctness harness (8 tests, all pass)
 - [x] Numerical stability handling for fully-masked rows
 - [x] Benchmark: dense vs. sparse across sequence lengths (512 → 8192)
-- [x] Quality comparison on TinyShakespeare (in progress)
-- [x] Writeup (see [WRITEUP.md](WRITEUP.md))
+- [x] Quality comparison on TinyShakespeare
+- [x] Writeup (see [writeup.md](writeup.md))
 - [ ] future expansions (custom kernal big bird)
 
 ## Results
@@ -45,7 +45,7 @@ Trained with matched hyperparameters (block_size=256, n_layer=2, n_head=6, batch
 | Sliding  | window_size=128                     | 1.5646   |
 | BigBird  | window=128, global=2, random=3      | 1.5490   |
 
-BigBird outperforms both dense and sliding on this task by a small but consistent margin. See [WRITEUP.md](WRITEUP.md) for full discussion.
+BigBird outperforms both dense and sliding on this task by a small but consistent margin. See [writeup.md](writeup.md) for full discussion.
 
 Generation samples from each trained model: [samples.txt](samples.txt).
 
