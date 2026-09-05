@@ -39,7 +39,7 @@ Being guilt be near after to mitter,
 And and my pri
 
 
-=== BIGBIRD (val loss TBD at 5000 iters) ===
+=== BIGBIRD (val loss 1.549 at 5000 iters) ===
 
 Nurse:
 Alas! a rich of those will the laws
