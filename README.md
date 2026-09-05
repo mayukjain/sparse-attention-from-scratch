@@ -11,7 +11,7 @@ Standard dense attention scales as O(n²) in sequence length. This project imple
 - [x] Working dense transformer (val loss ~1.53 at 2500 iters on TinyShakespeare)
 - [x] Sliding window attention(window_size=128, val loss ~1.53 at 2500 iters)
 - [x] BigBird-style attention (sliding + global + random; window=128, global=2, random=3; val loss ~1.52 at 2500 iters)
-- [ ] Correctness harness (partial — mask function tests done, more coverage planned)
+- [x] Correctness harness (8 tests covering sliding + bigbird structure, causality, boundaries)
 - [x] Numerical stability handling for fully-masked rows
 - [x] Benchmark: dense vs. sparse across sequence lengths (512 → 8192)
 - [ ] Quality comparison on TinyShakespeare (in progress)
