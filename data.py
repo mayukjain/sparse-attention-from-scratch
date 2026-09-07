@@ -1,7 +1,7 @@
 import torch
 from hyperparams import *
 
-with open("/home/mayukjain/Projects/ml/dl/nanogpt/input.txt", "r",encoding="utf-8") as f:
+with open("input.txt", "r",encoding="utf-8") as f:
     text = f.read()
 
 chars=sorted(list(set(text)))
